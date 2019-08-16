@@ -7,7 +7,7 @@ SELECT * FROM Aparelhos;
 SELECT * FROM Clientes;
 SELECT * FROM FuncionariosServicos;
 
-SELECT S.IdServico, C.NomeFantasia, S.CNPJ, A.Aparelho, CO.Comodo, S.Descricao,F.Nome AS Funcionario, S.DataDeInicio,S.Preco
+SELECT S.IdServico, C.NomeFantasia, S.CNPJ, A.Aparelho, CO.Comodo, S.Descricao,F.Nome AS Funcionario, FORMAT(S.DataDeInicio, 'dd/MM/yyyy') AS DataDeInicio ,S.Preco
 	FROM Servicos S
 		JOIN FuncionariosServicos FS ON FS.IdServico = S.IdServico
 		JOIN Funcionarios F ON FS.IdFuncionario = F.IdFuncionario
