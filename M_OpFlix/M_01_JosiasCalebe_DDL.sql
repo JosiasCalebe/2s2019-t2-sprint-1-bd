@@ -40,7 +40,7 @@ IdLancamento INT PRIMARY KEY IDENTITY
 );
 
 CREATE TABLE Favoritos(
-IdUsusario INT FOREIGN KEY REFERENCES Usuarios(IdUsuario)
+IdUsuario INT FOREIGN KEY REFERENCES Usuarios(IdUsuario)
 ,IdLancamento INT FOREIGN KEY REFERENCES Lancamentos (IdLancamento)
 );
 
