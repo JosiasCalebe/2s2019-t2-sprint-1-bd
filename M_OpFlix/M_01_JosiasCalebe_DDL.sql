@@ -1,10 +1,15 @@
 CREATE DATABASE M_OpFlix;
+
+GO
+
 USE M_OpFlix;
+
+GO
 
 CREATE TABLE Usuarios(
 IdUsuario INT PRIMARY KEY IDENTITY
 ,Nome VARCHAR(255) NOT NULL
-,Email VARCHAR(255) NOT NULL
+,Email VARCHAR(255) NOT NULL 
 ,Senha VARCHAR(255) NOT NULL
 ,NomeDeUsuario VARCHAR(255) NOT NULL UNIQUE
 ,DataDeNascimento DATE NOT NULL
@@ -44,6 +49,9 @@ IdUsuario INT FOREIGN KEY REFERENCES Usuarios(IdUsuario)
 ,IdLancamento INT FOREIGN KEY REFERENCES Lancamentos (IdLancamento)
 );
 
+EXEC sp_RENAME 'Favoritos.IdUsusario' , 'IdUsuario', 'COLUMN'
+
 ALTER TABLE ClassificacoesIndicativas ADD CI VARCHAR(3); 
+ALTER TABLE Usuarios ADD CONSTRAINT Email UNIQUE(Email);
 -- Incluir uma imagem para cada usuário cadastrado;
 ALTER TABLE Usuarios ADD ImagemUsuario VARCHAR(500) DEFAULT('https://image.flaticon.com/icons/svg/17/17004.svg');

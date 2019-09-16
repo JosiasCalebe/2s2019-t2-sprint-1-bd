@@ -1,4 +1,7 @@
 USE M_OpFlix;
+
+GO
+
 SELECT * FROM Lancamentos;
 -- Seleção - trazer todas as categorias, inclusive as que não possuem lançamentos vinculados;
 SELECT * FROM Categorias;
@@ -7,7 +10,6 @@ SELECT * FROM Plataformas;
 SELECT * FROM Usuarios;
 SELECT * FROM ClassificacoesIndicativas;
 SELECT * FROM Favoritos;
-
 
 
 /*Criar uma view que traga todas as plataformas e que mostre quais os gêneros que passem na plataforma;
@@ -63,6 +65,23 @@ JOIN ClassificacoesIndicativas CI ON CI.IdClassificacaoIndicativa = L.IdClassifi
 WHERE U.IdUsuario = @IdUsuario AND DATEDIFF(year, U.DataDeNascimento, GETDATE()) >= CI.ClassificacaoIndicativa;
 
 EXEC FavoritosPorIdUsuario @IdUsuario = 4
+
+CREATE PROCEDURE SelecionarDestintosPorIdUsuario @IdUsuario INT
+AS
+SELECT *
+FROM (
+SELECT U.NomeDeUsuario, DATEDIFF(year, U.DataDeNascimento, GETDATE()) AS Idade, L.IdLancamento, L.Titulo, L.Sinopse, C.Categoria, P.Plataforma, CI.CI AS ClassificacaoIndicativa, FORMAT(DataDeLancamento, 'dd/MM/yyyy') AS DataDeLancamento, L.TipoDeMidia, 
+CONVERT(VARCHAR(5), L.TempoDeDuracao) AS TempoDeDuracao, L.Episodios, row_number() over (partition by Titulo order by Titulo) as row_number
+FROM Lancamentos L
+JOIN Usuarios U ON U.IdUsuario = @IdUsuario
+JOIN Categorias C ON L.IdCategoria = C.IdCategoria
+JOIN Plataformas P ON P.IdPlataforma = L.IdPlataforma
+JOIN ClassificacoesIndicativas CI ON CI.IdClassificacaoIndicativa = L.IdClassificacaoIndicativa
+WHERE DATEDIFF(year, U.DataDeNascimento, GETDATE()) >= CI.ClassificacaoIndicativa
+)AS ROWS
+WHERE row_number = 1
+
+EXEC SelecionarDestintosPorIdUsuario @IdUsuario = 7
 
 
 CREATE PROCEDURE FavoritosPorNomeDeUsuario @NomeDeUsuario VARCHAR(255)

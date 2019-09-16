@@ -9,6 +9,7 @@ INSERT INTO Usuarios(Nome, Email, Senha, NomeDeUsuario, DataDeNascimento,Tipo)VA
 ,('Cassiana','cassiana@email.com','123456','Cassiana','01/01/0001','A')
 ,('Helena','helena@email.com','123456','Helena','01/01/0001','U')
 ,('Roberto','rob@email.com','3110','Roberto','01/01/0001','U');
+INSERT INTO Usuarios (Nome,Email,NomeDeUsuario,Senha,DataDeNascimento)VALUES('Abdul','a@email.com','Abdul','123456','12-12-1990')
 
 INSERT INTO Lancamentos(IdCategoria,IdPlataforma,IdClassificacaoIndicativa,Titulo,Sinopse,DataDeLancamento,TipoDeMidia,TempoDeDuracao,Episodios) VALUES
  (6,4,1,'Rei Leão(2019)'
